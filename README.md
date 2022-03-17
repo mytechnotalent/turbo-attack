@@ -10,7 +10,8 @@ A traffic generator to generate random traffic with random mac and ip addresses 
 # Linux
 ```bash
 pip3 install scapy
-usage: sudo ./traffic-generator 127.0.0.1 80
+chmod +x traffic-generator
+sudo ./traffic-generator 127.0.0.1 80 1000
 ```
 
 ## Contributing
