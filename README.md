@@ -9,13 +9,13 @@ A traffic generator to generate random traffic with random mac and ip addresses 
 
 # Mac
 ```bash
-pip install scapy
+pip3 install scapy
 usage: sudo ./traffic-generator 127.0.0.1 80
 ```
 
 # Linux
 ```bash
-pip install scapy
+pip3 install scapy
 usage: sudo ./traffic-generator 127.0.0.1 80
 ```
 
