@@ -15,10 +15,10 @@ sudo ./traffic-generator 127.0.0.1 80 1000
 ```
 
 ## Terms of Use
-Do NOT use this on any computer you do not own, or are not allowed to run this on.<br>
-You may NEVER attempt to sell this, its free and open source.<br>
-The authors and publishers assume no responsibility.<br>
-For educational purposes only.
+* Do NOT use this on any computer you do not own, or are not allowed to run this on.<br>
+* You may NEVER attempt to sell this, its free and open source.<br>
+* The authors and publishers assume no responsibility.<br>
+* For educational purposes only.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
