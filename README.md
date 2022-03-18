@@ -5,7 +5,7 @@
 <br>
 
 # traffic-generator
-A traffic generator to generate random traffic with random mac and ip addresses in addition to random sequence numbers to a particular ip and port.
+A traffic generator pentesting tool to generate random traffic with random mac and ip addresses in addition to random sequence numbers to a particular ip and port.
 
 # Linux
 ```bash
