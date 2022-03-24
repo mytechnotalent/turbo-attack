@@ -10,10 +10,11 @@ package routine
 
 import (
 	"fmt"
-	"go-test/packet"
 	"log"
 	"net"
 	"syscall"
+
+	"github.com/mytechnotalent/turbo-attack/packet"
 )
 
 // IPv4 takes an ip and port and sends a random TCP4 packet with random flags.

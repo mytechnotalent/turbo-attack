@@ -11,13 +11,14 @@ package main
 
 import (
 	"fmt"
-	"go-test/convert"
-	"go-test/routine"
-	"go-test/sudo"
 	"log"
 	"os"
 	"runtime"
 	"sync"
+
+	"github.com/mytechnotalent/turbo-attack/convert"
+	"github.com/mytechnotalent/turbo-attack/routine"
+	"github.com/mytechnotalent/turbo-attack/sudo"
 )
 
 func main() {

@@ -9,10 +9,11 @@
 package packet
 
 import (
-	"go-test/bit"
-	"go-test/convert"
-	"go-test/random"
 	"log"
+
+	"github.com/mytechnotalent/turbo-attack/bit"
+	"github.com/mytechnotalent/turbo-attack/convert"
+	"github.com/mytechnotalent/turbo-attack/random"
 )
 
 // TCP4 provides custom TCP4 packet creation.
