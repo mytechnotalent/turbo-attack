@@ -4,14 +4,19 @@
 
 <br>
 
-# traffic-generator
-A traffic generator pentesting tool to generate random traffic with random mac and ip addresses in addition to random sequence numbers to a particular ip and port.
+# turbo-attack
+A turbo traffic generator pentesting tool to generate random traffic with random mac and ip addresses in addition to random sequence numbers to a particular ip and port.
 
-# Linux
+# NOTE:  Only IP's are used for this tool and it will not accept hostnames.  You can use either an IPv4 or IPv6 address as shown below.
+
+# Linux IPv4
 ```bash
-pip3 install scapy
-chmod +x traffic-generator
-sudo ./traffic-generator 127.0.0.1 80 1000
+usage: sudo ./turbo-attack_010l eth0 4 192.168.0.2 443 150000
+```
+
+# Linux IPv6
+```bash
+usage: sudo ./turbo-attack_010l eth0 6 fe80:0000:0000:0000:0000:0000:0000:0002 443 150000
 ```
 
 ## Terms Of Use
