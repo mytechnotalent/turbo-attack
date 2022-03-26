@@ -6,13 +6,12 @@
 // For educational purposes only.
 
 // sudo code . --no-sandbox --user-data-dir=/home/anonymous/Documents
-// usage: sudo -E /usr/local/go/bin/go test
 
 package main
 
 import (
 	"testing"
-	
+
 	"github.com/mytechnotalent/turbo-attack/convert"
 	"github.com/mytechnotalent/turbo-attack/routine"
 )
@@ -23,14 +22,9 @@ func TestTCP4ProducesValidTCP4Packet(t *testing.T) {
 	ip := "192.168.0.2"
 	port := "443"
 	count := "1"
-	ipv4Byte, portByte, _ := convert.IPV4(&ip, &port, &count)
-	packetErr, writeErr := routine.IPv4(&ethInterface, ipv4Byte, portByte)
-	if packetErr != nil {
-		t.Errorf("packetErr")
-	}
-	if writeErr != nil {
-		t.Errorf("writeErr")
-	}
+	ipv4Byte, portByte, _ := convert.IPV4(&ethInterface, &ip, &port, &count)
+	routine.IPv4(&ethInterface, ipv4Byte, portByte)
+
 }
 
 // Verify TCP6 produces a valid TCP6 packet.
@@ -39,12 +33,6 @@ func TestTCP6ProducesValidTCP6Packet(t *testing.T) {
 	ip := "fe80:0000:0000:0000:0000:0000:0000:0002"
 	port := "443"
 	count := "1"
-	ipv6Byte, portByte, _ := convert.IPV6(&ip, &port, &count)
-	packetErr, writeErr := routine.IPv6(&ethInterface, ipv6Byte, portByte)
-	if packetErr != nil {
-		t.Errorf("packetErr")
-	}
-	if writeErr != nil {
-		t.Errorf("writeErr")
-	}
+	ipv6Byte, portByte, _ := convert.IPV6(&ethInterface, &ip, &port, &count)
+	routine.IPv6(&ethInterface, ipv6Byte, portByte)
 }

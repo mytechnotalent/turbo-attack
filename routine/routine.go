@@ -9,7 +9,6 @@
 package routine
 
 import (
-	"fmt"
 	"log"
 	"net"
 	"syscall"
@@ -18,17 +17,14 @@ import (
 )
 
 // IPv4 takes an ip and port and sends a random TCP4 packet with random flags.
-// It will return a error if one is found.
-func IPv4(ethInterface *string, ipv4Byte, portByte *[]byte) (error, error) {
+func IPv4(ethInterface *string, ipv4Byte, portByte *[]byte) {
 	fd, err := syscall.Socket(syscall.AF_PACKET, syscall.SOCK_RAW, syscall.ETH_P_ALL)
 	if err != nil {
-		fmt.Println("error syscall.Socket")
-		fmt.Println(err)
+		log.Fatal("invalid socket")
 	}
 	nic, err := net.InterfaceByName(*ethInterface)
 	if err != nil {
-		fmt.Println("error net.InterfaceByName")
-		fmt.Println(err)
+		log.Fatal("interface does not exist")
 	}
 	var hardwareAddr [8]byte
 	copy(hardwareAddr[0:7], nic.HardwareAddr[0:7])
@@ -40,35 +36,28 @@ func IPv4(ethInterface *string, ipv4Byte, portByte *[]byte) (error, error) {
 	}
 	err = syscall.Bind(fd, &addr)
 	if err != nil {
-		fmt.Println("error syscall.Bind")
-		fmt.Println(err)
+		log.Fatal("unable to bind to socket")
 	}
 	packet, packetErr := packet.TCP4(74, *ipv4Byte, *portByte)
 	if packetErr != nil {
-		log.Fatal(err)
+		log.Fatal("unable to create packet")
 	}
-	n, writeErr := syscall.Write(fd, packet)
+	_, writeErr := syscall.Write(fd, packet)
 	if writeErr != nil {
-		fmt.Println("error syscall.Write")
-		fmt.Println(err)
-		fmt.Println(n)
+		log.Fatal("unable to write")
 	}
 	syscall.Close(fd)
-	return packetErr, writeErr
 }
 
 // IPv6 takes an ip and port and sends a random TCP6 packet with random flags.
-// It will return a error if one is found.
-func IPv6(ethInterface *string, ipv6Byte *[]byte, portByte *[]byte) (error, error) {
+func IPv6(ethInterface *string, ipv6Byte *[]byte, portByte *[]byte) {
 	fd, err := syscall.Socket(syscall.AF_PACKET, syscall.SOCK_RAW, syscall.ETH_P_ALL)
 	if err != nil {
-		fmt.Println("error syscall.Socket")
-		fmt.Println(err)
+		log.Fatal("invalid socket")
 	}
 	nic, err := net.InterfaceByName(*ethInterface)
 	if err != nil {
-		fmt.Println("error net.InterfaceByName")
-		fmt.Println(err)
+		log.Fatal("interface does not exist")
 	}
 	var hardwareAddr [8]byte
 	copy(hardwareAddr[0:7], nic.HardwareAddr[0:7])
@@ -80,19 +69,15 @@ func IPv6(ethInterface *string, ipv6Byte *[]byte, portByte *[]byte) (error, erro
 	}
 	err = syscall.Bind(fd, &addr)
 	if err != nil {
-		fmt.Println("error syscall.Bind")
-		fmt.Println(err)
+		log.Fatal("unable to bind to socket")
 	}
 	packet, packetErr := packet.TCP6(74, *ipv6Byte, *portByte)
 	if packetErr != nil {
-		log.Fatal(err)
+		log.Fatal("unable to create packet")
 	}
-	n, writeErr := syscall.Write(fd, packet)
+	_, writeErr := syscall.Write(fd, packet)
 	if writeErr != nil {
-		fmt.Println("error syscall.Write")
-		fmt.Println(err)
-		fmt.Println(n)
+		log.Fatal("unable to write")
 	}
 	syscall.Close(fd)
-	return packetErr, writeErr
 }

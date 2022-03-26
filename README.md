@@ -7,14 +7,24 @@
 # turbo-attack
 A turbo traffic generator pentesting tool to generate random traffic with random mac and ip addresses in addition to random sequence numbers to a particular ip and port.
 
-# Linux IPv4
+# Linux IPv4 (ARM64)
 ```bash
-usage: sudo ./turbo-attack_010l eth0 4 192.168.0.2 443 150000
+usage: sudo ./turbo-attack_010_linux_arm64 eth0 4 192.168.0.2 443 150000
 ```
 
-# Linux IPv6
+# Linux IPv6 (ARM64)
 ```bash
-usage: sudo ./turbo-attack_010l eth0 6 fe80:0000:0000:0000:0000:0000:0000:0002 443 150000
+usage: sudo ./turbo-attack_010_linux_arm64 eth0 6 fe80:0000:0000:0000:0000:0000:0000:0002 443 150000
+```
+
+# Linux IPv4 (AMD64)
+```bash
+usage: sudo ./turbo-attack_010_linux_amd64 eth0 4 192.168.0.2 443 150000
+```
+
+# Linux IPv6 (AMD64)
+```bash
+usage: sudo ./turbo-attack_010_linux_amd64 eth0 6 fe80:0000:0000:0000:0000:0000:0000:0002 443 150000
 ```
 
 ## Usage
