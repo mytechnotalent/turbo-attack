@@ -15,7 +15,7 @@ import (
 	
 	"github.com/mytechnotalent/turbo-attack/convert"
 	"github.com/mytechnotalent/turbo-attack/routine"
-       )
+)
 
 // Verify TCP4 produces a valid TCP4 packet.
 func TestTCP4ProducesValidTCP4Packet(t *testing.T) {
