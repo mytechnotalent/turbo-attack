@@ -11,6 +11,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"runtime"
 	"sync"
@@ -41,7 +42,10 @@ func main() {
 
 	var wg sync.WaitGroup
 	if ipVersion == "4" {
-		ipv4Byte, portByte, countInt := convert.IPV4(&ethInterface, &ip, &port, &count)
+		ipv4Byte, portByte, countInt, err := convert.IPV4(&ethInterface, &ip, &port, &count)
+		if err != nil {
+			log.Fatal(err)
+		}
 		for i := 0; i < *countInt; i++ {
 			wg.Add(1)
 			routine.IPv4(&ethInterface, ipv4Byte, portByte)
@@ -49,7 +53,10 @@ func main() {
 		}
 		wg.Wait()
 	} else if ipVersion == "6" {
-		ipv6Byte, portByte, countInt := convert.IPV6(&ethInterface, &ip, &port, &count)
+		ipv6Byte, portByte, countInt, err := convert.IPV6(&ethInterface, &ip, &port, &count)
+		if err != nil {
+			log.Fatal(err)
+		}
 		for i := 0; i < *countInt; i++ {
 			routine.IPv6(&ethInterface, ipv6Byte, portByte)
 		}

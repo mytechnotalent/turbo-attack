@@ -31,7 +31,10 @@ func TCP4(size int, ipv4Byte []byte, portByte []byte) (packet []byte, err error)
 	if err != nil {
 		log.Fatal(err)
 	}
-	nByte := convert.IntToByte(nIntCB)
+	nByte, err := convert.IntToByte(nIntCB)
+	if err != nil {
+		log.Fatal(err)
+	}
 	// ethernet header - dst MAC addr [6 bytes]
 	packet[0] = nByte[7]
 	packet[1] = randDstMACAddr[0]
@@ -49,7 +52,10 @@ func TCP4(size int, ipv4Byte []byte, portByte []byte) (packet []byte, err error)
 	if err != nil {
 		log.Fatal(err)
 	}
-	nByte = convert.IntToByte(nIntCB)
+	nByte, err = convert.IntToByte(nIntCB)
+	if err != nil {
+		log.Fatal(err)
+	}
 	// ethernet header - src MAC addr [6 bytes]
 	packet[6] = nByte[7] // to ensure factory default, bit 6 must be a 0
 	packet[7] = randSrcMACAddr[0]
@@ -181,7 +187,10 @@ func TCP6(size int, ipv6Byte []byte, portByte []byte) (packet []byte, err error)
 	if err != nil {
 		log.Fatal(err)
 	}
-	nByte := convert.IntToByte(nIntCB)
+	nByte, err := convert.IntToByte(nIntCB)
+	if err != nil {
+		log.Fatal(err)
+	}
 	// ethernet header - dst MAC addr [6 bytes]
 	packet[0] = nByte[7]
 	packet[1] = randDstMACAddr[0]
@@ -199,7 +208,10 @@ func TCP6(size int, ipv6Byte []byte, portByte []byte) (packet []byte, err error)
 	if err != nil {
 		log.Fatal(err)
 	}
-	nByte = convert.IntToByte(nIntCB)
+	nByte, err = convert.IntToByte(nIntCB)
+	if err != nil {
+		log.Fatal(err)
+	}
 	// ethernet header - src MAC addr [6 bytes]
 	packet[6] = nByte[7] // to ensure factory default, bit 6 must be a 0
 	packet[7] = randSrcMACAddr[0]
