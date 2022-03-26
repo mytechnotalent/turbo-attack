@@ -43,7 +43,7 @@ func TestIntToByteProducesInvalidConversionWithInvalidHigherIntRange(t *testing.
 // Verify TCP4 produces a valid TCP4 packet.
 func TestTCP4ProducesValidTCP4Packet(t *testing.T) {
 	ethInterface := "eth0"
-	ip := "192.168.0.2d"
+	ip := "192.168.0.2"
 	port := "443"
 	count := "1"
 	_, _, _, err := IPV4(&ethInterface, &ip, &port, &count)
