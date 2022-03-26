@@ -17,12 +17,12 @@ usage: sudo ./turbo-attack_010_linux_arm64 eth0 4 192.168.0.2 443 150000
 usage: sudo ./turbo-attack_010_linux_arm64 eth0 6 fe80:0000:0000:0000:0000:0000:0000:0002 443 150000
 ```
 
-# Linux IPv4 (AMD64) ** NOTE: significantly slower than ARM64
+# Linux IPv4 (AMD64)
 ```bash
 usage: sudo ./turbo-attack_010_linux_amd64 eth0 4 192.168.0.2 443 150000
 ```
 
-# Linux IPv6 (AMD64) ** NOTE: significantly slower than ARM64
+# Linux IPv6 (AMD64)
 ```bash
 usage: sudo ./turbo-attack_010_linux_amd64 eth0 6 fe80:0000:0000:0000:0000:0000:0000:0002 443 150000
 ```
