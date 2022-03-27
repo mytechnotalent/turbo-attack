@@ -11,7 +11,6 @@ package convert
 import (
 	"encoding/binary"
 	"errors"
-	"log"
 	"net"
 	"strconv"
 	"strings"
@@ -44,20 +43,14 @@ func IPV4(ethInterface, ip, port, count *string) (*[]byte, *[]byte, *int, error)
 		return nil, nil, nil, errors.New("invalid ip4 ip")
 	}
 	ipv4Byte := []byte(ipv4NetIP)
-	portInt, err := strconv.Atoi(*port) // convert first string octet to int
+	portInt, _ := strconv.Atoi(*port) // convert first string octet to int
 	if portInt < 1 || portInt > 65535 {
-		return nil, nil, nil, errors.New("invalid port number")
+		return nil, nil, nil, errors.New("invalid port range")
 	}
-	if err != nil {
-		return nil, nil, nil, errors.New("invalid port")
-	}
-	portByte, err := IntToByte(portInt)
-	if err != nil {
-		log.Fatal(err)
-	}
-	countInt, err := strconv.Atoi(*count)
-	if err != nil {
-		return nil, nil, nil, errors.New("invalid count")
+	portByte, _ := IntToByte(portInt)
+	countInt, _ := strconv.Atoi(*count)
+	if countInt < 1 || countInt > 1000000 {
+		return nil, nil, nil, errors.New("invalid count range")
 	}
 	return &ipv4Byte, &portByte, &countInt, nil
 }
@@ -77,20 +70,14 @@ func IPV6(ethInterface, ip, port, count *string) (*[]byte, *[]byte, *int, error)
 		return nil, nil, nil, errors.New("invalid ip6 ip")
 	}
 	ipv6Byte := []byte(ipv6NetIP)
-	portInt, err := strconv.Atoi(*port) // convert first string octet to int
+	portInt, _ := strconv.Atoi(*port) // convert first string octet to int
 	if portInt < 1 || portInt > 65535 {
-		return nil, nil, nil, errors.New("invalid port number")
+		return nil, nil, nil, errors.New("invalid port range")
 	}
-	if err != nil {
-		return nil, nil, nil, errors.New("invalid port")
-	}
-	portByte, err := IntToByte(portInt)
-	if err != nil {
-		log.Fatal(err)
-	}
-	countInt, err := strconv.Atoi(*count)
-	if err != nil {
-		return nil, nil, nil, errors.New("invalid count")
+	portByte, _ := IntToByte(portInt)
+	countInt, _ := strconv.Atoi(*count)
+	if countInt < 1 || countInt > 1000000 {
+		return nil, nil, nil, errors.New("invalid count range")
 	}
 	return &ipv6Byte, &portByte, &countInt, nil
 }

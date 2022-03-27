@@ -29,7 +29,9 @@ usage: sudo ./turbo-attack_010_linux_amd64 eth0 6 fe80:0000:0000:0000:0000:0000:
 
 # Run Tests
 ```bash
-sudo /usr/local/go/bin/go test -v -cover ./...
+go test -v -cover ./...
+go test -coverprofile=coverage.out ./...
+go tool cover -html=coverage.out
 ```
 
 ## Usage
