@@ -40,7 +40,7 @@ func IPV4(ethInterface, ip, port, count *string) (*[]byte, *[]byte, *int, error)
 	}
 	validIP4IP := strings.Contains(*ip, ":")
 	if validIP4IP == true {
-		return nil, nil, nil, errors.New("invalid ip4 ip")
+		return nil, nil, nil, errors.New("invalid ipv4 ip")
 	}
 	ipv4Byte := []byte(ipv4NetIP)
 	portInt, _ := strconv.Atoi(*port) // convert first string octet to int

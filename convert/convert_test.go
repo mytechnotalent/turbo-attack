@@ -50,7 +50,7 @@ func TestIntToByteProducesInvalidConversionWithInvalidHigherIntRange(t *testing.
 }
 
 // Verify TCP4 produces a valid TCP4 packet.
-func TestTCP4ProducesValidTCP4PacketWithETH0(t *testing.T) {
+func TestTCP4ProducesValidTCP4Packet(t *testing.T) {
 	// Params
 	ethInterface := "eth0"
 	ip := "192.168.0.2"
@@ -60,6 +60,36 @@ func TestTCP4ProducesValidTCP4PacketWithETH0(t *testing.T) {
 	_, _, _, err := IPV4(&ethInterface, &ip, &port, &count)
 	// Asserts
 	if err != nil {
+		t.Error(err)
+	}
+}
+
+// Verify TCP4 produces an invalid TCP4 packet by passing in an invalid IP.
+func TestTCP4ProducesInvalidTCP4PacketWithInvalidIP(t *testing.T) {
+	// Params
+	ethInterface := "eth0"
+	ip := "foo"
+	port := "443"
+	count := "1"
+	// Calls
+	_, _, _, err := IPV4(&ethInterface, &ip, &port, &count)
+	// Asserts
+	if err == nil {
+		t.Error(err)
+	}
+}
+
+// Verify TCP4 produces an invalid TCP4 packet by passing in a valid IPV6 IP.
+func TestTCP4ProducesInvalidTCP4PacketWithValidIPV6IP(t *testing.T) {
+	// Params
+	ethInterface := "eth0"
+	ip := "fe80:0000:0000:0000:0000:0000:0000:0002"
+	port := "443"
+	count := "1"
+	// Calls
+	_, _, _, err := IPV4(&ethInterface, &ip, &port, &count)
+	// Asserts
+	if err == nil {
 		t.Error(err)
 	}
 }
