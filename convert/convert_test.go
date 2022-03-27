@@ -214,6 +214,36 @@ func TestTCP6ProducesValidTCP6Packet(t *testing.T) {
 	}
 }
 
+// Verify TCP6 produces an invalid TCP6 packet by passing in an invalid IP.
+func TestTCP6ProducesInvalidTCP6PacketWithInvalidIP(t *testing.T) {
+	// Params
+	ethInterface := "eth0"
+	ip := "foo"
+	port := "443"
+	count := "1"
+	// Calls
+	_, _, _, err := IPV6(&ethInterface, &ip, &port, &count)
+	// Asserts
+	if err == nil {
+		t.Error(err)
+	}
+}
+
+// Verify TCP6 produces an invalid TCP6 packet by passing in a valid IPV4 IP.
+func TestTCP6ProducesInvalidTCP6PacketWithValidIPV4IP(t *testing.T) {
+	// Params
+	ethInterface := "eth0"
+	ip := "192.168.0.2"
+	port := "443"
+	count := "1"
+	// Calls
+	_, _, _, err := IPV6(&ethInterface, &ip, &port, &count)
+	// Asserts
+	if err == nil {
+		t.Error(err)
+	}
+}
+
 // Verify TCP6 produces an invalid TCP6 packet by passing in an invalid ethInterface.
 func TestTCP6ProducesInvalidTCP6PacketWithInvalidEthInterface(t *testing.T) {
 	// Params
