@@ -28,7 +28,7 @@ func Int(max int64) (int, error) {
 // Byte generates a random byte.
 // It will return a valid byte or error.
 func Byte(n int) ([]byte, error) {
-	b := make([]byte, n)
+	b := make([]byte, n, n)
 	_, err := rand.Read(b)
 	if err != nil {
 		return nil, err

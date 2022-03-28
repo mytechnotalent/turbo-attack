@@ -23,7 +23,7 @@ func IntToByte(n int) ([]byte, error) {
 		return nil, errors.New("invalid int range")
 	}
 	nUint64 := uint64(n)
-	nByte := make([]byte, 8)
+	nByte := make([]byte, 8, 8)
 	binary.BigEndian.PutUint64(nByte, nUint64)
 	return nByte, nil
 }

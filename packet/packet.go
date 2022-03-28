@@ -18,8 +18,8 @@ import (
 
 // TCP4 provides custom TCP4 packet creation.
 // It will return a valid byte slice or error.
-func TCP4(size int, ipv4Byte []byte, portByte []byte) (packet []byte, err error) {
-	packet = make([]byte, size)
+func TCP4(size int, ipv4Byte, portByte []byte) (packet []byte, err error) {
+	packet = make([]byte, size, size)
 	// ethernet header - dst MAC addr [6 bytes]
 	nInt, err := random.Int(255)
 	if err != nil {
@@ -175,7 +175,7 @@ func TCP4(size int, ipv4Byte []byte, portByte []byte) (packet []byte, err error)
 // TCP6 provides custom TCP6 packet creation.
 // It will return a valid byte slice or error.
 func TCP6(size int, ipv6Byte []byte, portByte []byte) (packet []byte, err error) {
-	packet = make([]byte, size)
+	packet = make([]byte, size, size)
 	// ethernet header - dst MAC addr [6 bytes]
 	nInt, err := random.Int(255)
 	if err != nil {
