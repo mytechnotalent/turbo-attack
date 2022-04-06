@@ -27,13 +27,6 @@ usage: sudo ./turbo-attack_010_linux_amd64 eth0 4 192.168.0.2 443 150000
 usage: sudo ./turbo-attack_010_linux_amd64 eth0 6 fe80:0000:0000:0000:0000:0000:0000:0002 443 150000
 ```
 
-# Run Tests
-```bash
-go test -v -cover ./...
-go test -coverprofile=coverage.out ./...
-go tool cover -html=coverage.out
-```
-
 ## Usage
 * Designed for Kali Linux or Debian distros only.  This software uses Linux syscalls in order to optimize for speed.
 * Tested within a Kali Linux ARM64 VMware Fusion VM on a Macbook Pro ARM64 machine.
