@@ -8,16 +8,24 @@
 // Package routine provides bit manipulation functionality.
 package bit
 
-// Clear clears a single bit in an int.
-// It will return an int with the respective bit cleared.
-func Clear(n int, pos uint) int {
-	n &= ^(1 << pos)
-	return n
+import "errors"
+
+// Clear clears a single bit in a uint8.
+// It will return a valid *uint8 or an error if one occurred.
+func Clear(n *uint8, pos uint8) (*uint8, error) {
+	if *n < 0 || *n > 255 {
+		return nil, errors.New("invalid uint8")
+	}
+	*n &= ^(1 << pos)
+	return n, nil
 }
 
-// Set sets a single bit in an int.
-// It will return an int with the respective bit set.
-func Set(n int, pos uint) int {
-	n |= (1 << pos)
-	return n
+// Set sets a single bit in a uint8.
+// It will return a valid *uint8 or an error if one occurred.
+func Set(n *uint8, pos uint8) (*uint8, error) {
+	if *n < 0 || *n > 255 {
+		return nil, errors.New("invalid uint8")
+	}
+	*n |= (1 << pos)
+	return n, nil
 }

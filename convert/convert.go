@@ -16,16 +16,29 @@ import (
 	"strings"
 )
 
-// IntToByte converts an int to a byte.
-// It will return a []byte or an error if one occurred.
-func IntToByte(n int) ([]byte, error) {
-	if n < 0 || n > 1000000 {
-		return nil, errors.New("invalid int range")
+// Int8ToByte converts an uint8 to a byte.
+// It will return a *byte or an error if one occurred.
+func Int8ToByte(n *uint8) (*byte, error) {
+	if *n < 0 || *n > 255 {
+		return nil, errors.New("invalid uint8")
 	}
-	nUint64 := uint64(n)
-	nByte := make([]byte, 8, 8)
-	binary.BigEndian.PutUint64(nByte, nUint64)
-	return nByte, nil
+	nUint16 := uint16(*n)
+	nByte := make([]byte, 2, 2)
+	binary.BigEndian.PutUint16(nByte, nUint16)
+	nByte1 := nByte[1]
+	return &nByte1, nil
+}
+
+// Int8ToByte converts an uint16 to a []byte.
+// It will return a *[]byte or an error if one occurred.
+func Int16ToByte(n *uint16) (*[]byte, error) {
+	if *n < 0 || *n > 65535 {
+		return nil, errors.New("invalid uint16")
+	}
+	nUint16 := uint16(*n)
+	nByte := make([]byte, 2, 2)
+	binary.BigEndian.PutUint16(nByte, nUint16)
+	return &nByte, nil
 }
 
 // IPV4 converts a string into a properly formatted byte and int.
@@ -43,16 +56,20 @@ func IPV4(ethInterface, ip, port, count *string) (*[]byte, *[]byte, *int, error)
 		return nil, nil, nil, errors.New("invalid ipv4 ip")
 	}
 	ipv4Byte := []byte(ipv4NetIP)
-	portInt, _ := strconv.Atoi(*port) // convert first string octet to int
+	portInt, err := strconv.Atoi(*port) // convert first string octet to int
+	portUint16 := uint16(portInt)
+	if err != nil {
+		return nil, nil, nil, errors.New("invalid uint16")
+	}
 	if portInt < 1 || portInt > 65535 {
 		return nil, nil, nil, errors.New("invalid port range")
 	}
-	portByte, _ := IntToByte(portInt)
+	portByte, _ := Int16ToByte(&portUint16)
 	countInt, _ := strconv.Atoi(*count)
-	if countInt < 1 || countInt > 1000000 {
+	if countInt < 1 || countInt > 2147483647 {
 		return nil, nil, nil, errors.New("invalid count range")
 	}
-	return &ipv4Byte, &portByte, &countInt, nil
+	return &ipv4Byte, portByte, &countInt, nil
 }
 
 // IPV6 converts a string into a properly formatted byte and int.
@@ -71,13 +88,14 @@ func IPV6(ethInterface, ip, port, count *string) (*[]byte, *[]byte, *int, error)
 	}
 	ipv6Byte := []byte(ipv6NetIP)
 	portInt, _ := strconv.Atoi(*port) // convert first string octet to int
+	portUint16 := uint16(portInt)
 	if portInt < 1 || portInt > 65535 {
 		return nil, nil, nil, errors.New("invalid port range")
 	}
-	portByte, _ := IntToByte(portInt)
+	portByte, _ := Int16ToByte(&portUint16)
 	countInt, _ := strconv.Atoi(*count)
 	if countInt < 1 || countInt > 1000000 {
 		return nil, nil, nil, errors.New("invalid count range")
 	}
-	return &ipv6Byte, &portByte, &countInt, nil
+	return &ipv6Byte, portByte, &countInt, nil
 }

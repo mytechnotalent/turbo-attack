@@ -9,6 +9,7 @@
 package packet
 
 import (
+	"errors"
 	"log"
 
 	"github.com/mytechnotalent/turbo-attack/bit"
@@ -22,21 +23,28 @@ func TCP4(size int, ipv4Byte, portByte []byte) (packet []byte, err error) {
 	packet = make([]byte, size, size)
 	// ethernet header - dst MAC addr [6 bytes]
 	nInt, err := random.Int(255)
+	nUint8 := uint8(nInt)
 	if err != nil {
-		log.Fatal(err)
+		return nil, errors.New("invalid uint8")
 	}
-	nIntCB := bit.Clear(nInt, 0)  // to ensure unicast, bit 0 is not set
-	nIntCB = bit.Clear(nIntCB, 1) // to ensure factory default, bit 1 is not set
+	nIntCB, err := bit.Clear(&nUint8, 0) // to ensure unicast, bit 0 is not set
+	if err != nil {
+		return nil, errors.New("invalid uint8")
+	}
+	nIntCB, err = bit.Clear(nIntCB, 1) // to ensure factory default, bit 1 is not set
+	if err != nil {
+		return nil, errors.New("invalid uint8")
+	}
 	randDstMACAddr, err := random.Byte(5)
 	if err != nil {
 		log.Fatal(err)
 	}
-	nByte, err := convert.IntToByte(nIntCB)
+	nByte, err := convert.Int8ToByte(nIntCB)
 	if err != nil {
 		log.Fatal(err)
 	}
 	// ethernet header - dst MAC addr [6 bytes]
-	packet[0] = nByte[7]
+	packet[0] = *nByte
 	packet[1] = randDstMACAddr[0]
 	packet[2] = randDstMACAddr[1]
 	packet[3] = randDstMACAddr[2]
@@ -46,18 +54,16 @@ func TCP4(size int, ipv4Byte, portByte []byte) (packet []byte, err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	nIntCB = bit.Clear(nInt, 0)   // to ensure unicast, bit 0 is not set
-	nIntCB = bit.Clear(nIntCB, 1) // to ensure factory default, bit 1 is not set
 	randSrcMACAddr, err := random.Byte(5)
 	if err != nil {
 		log.Fatal(err)
 	}
-	nByte, err = convert.IntToByte(nIntCB)
+	nByte, err = convert.Int8ToByte(nIntCB)
 	if err != nil {
 		log.Fatal(err)
 	}
 	// ethernet header - src MAC addr [6 bytes]
-	packet[6] = nByte[7] // to ensure factory default, bit 6 must be a 0
+	packet[6] = *nByte
 	packet[7] = randSrcMACAddr[0]
 	packet[8] = randSrcMACAddr[1]
 	packet[9] = randSrcMACAddr[2]
@@ -178,21 +184,28 @@ func TCP6(size int, ipv6Byte []byte, portByte []byte) (packet []byte, err error)
 	packet = make([]byte, size, size)
 	// ethernet header - dst MAC addr [6 bytes]
 	nInt, err := random.Int(255)
+	nUint8 := uint8(nInt)
 	if err != nil {
-		log.Fatal(err)
+		return nil, errors.New("invalid uint8")
 	}
-	nIntCB := bit.Clear(nInt, 0)  // to ensure unicast, bit 0 is not set
-	nIntCB = bit.Clear(nIntCB, 1) // to ensure factory default, bit 1 is not set
+	nIntCB, err := bit.Clear(&nUint8, 0) // to ensure unicast, bit 0 is not set
+	if err != nil {
+		return nil, errors.New("invalid uint8")
+	}
+	nIntCB, err = bit.Clear(nIntCB, 1) // to ensure factory default, bit 1 is not set
+	if err != nil {
+		return nil, errors.New("invalid uint8")
+	}
 	randDstMACAddr, err := random.Byte(5)
 	if err != nil {
 		log.Fatal(err)
 	}
-	nByte, err := convert.IntToByte(nIntCB)
+	nByte, err := convert.Int8ToByte(nIntCB)
 	if err != nil {
 		log.Fatal(err)
 	}
 	// ethernet header - dst MAC addr [6 bytes]
-	packet[0] = nByte[7]
+	packet[0] = *nByte
 	packet[1] = randDstMACAddr[0]
 	packet[2] = randDstMACAddr[1]
 	packet[3] = randDstMACAddr[2]
@@ -202,18 +215,16 @@ func TCP6(size int, ipv6Byte []byte, portByte []byte) (packet []byte, err error)
 	if err != nil {
 		log.Fatal(err)
 	}
-	nIntCB = bit.Clear(nInt, 0)   // to ensure unicast, bit 0 is not set
-	nIntCB = bit.Clear(nIntCB, 1) // to ensure factory default, bit 1 is not set
 	randSrcMACAddr, err := random.Byte(5)
 	if err != nil {
 		log.Fatal(err)
 	}
-	nByte, err = convert.IntToByte(nIntCB)
+	nByte, err = convert.Int8ToByte(nIntCB)
 	if err != nil {
 		log.Fatal(err)
 	}
 	// ethernet header - src MAC addr [6 bytes]
-	packet[6] = nByte[7] // to ensure factory default, bit 6 must be a 0
+	packet[6] = *nByte
 	packet[7] = randSrcMACAddr[0]
 	packet[8] = randSrcMACAddr[1]
 	packet[9] = randSrcMACAddr[2]
@@ -280,8 +291,8 @@ func TCP6(size int, ipv6Byte []byte, portByte []byte) (packet []byte, err error)
 	packet[54] = randSrcTCPPort[0]
 	packet[55] = randSrcTCPPort[1]
 	// TCP header - dst TCP port [2 bytes]
-	packet[56] = portByte[6]
-	packet[57] = portByte[7]
+	packet[56] = portByte[0]
+	packet[57] = portByte[1]
 	// TCP header - sequence number [4 bytes]
 	randSeqNum, err := random.Byte(4)
 	if err != nil {
