@@ -26,22 +26,13 @@ func TCP4(size int, ipv4Byte, portByte []byte) (packet []byte, err error) {
 	if err != nil {
 		return nil, errors.New("invalid uint8")
 	}
-	nIntCB, err := bit.Clear(nUInt8, 0) // to ensure unicast, bit 0 is not set
-	if err != nil {
-		return nil, errors.New("invalid uint8")
-	}
-	nIntCB, err = bit.Clear(nIntCB, 1) // to ensure factory default, bit 1 is not set
-	if err != nil {
-		return nil, errors.New("invalid uint8")
-	}
+	nIntCB := bit.Clear(nUInt8, 0) // to ensure unicast, bit 0 is not set
+	nIntCB = bit.Clear(nIntCB, 1)  // to ensure factory default, bit 1 is not set
 	randDstMACAddr, err := rand.Byte(5)
 	if err != nil {
 		log.Fatal(err)
 	}
-	nByte, err := convert.Int8ToByte(nIntCB)
-	if err != nil {
-		log.Fatal(err)
-	}
+	nByte := convert.Int8ToByte(nIntCB)
 	// ethernet header - dst MAC addr [6 bytes]
 	packet[0] = *nByte
 	packet[1] = randDstMACAddr[0]
@@ -53,10 +44,7 @@ func TCP4(size int, ipv4Byte, portByte []byte) (packet []byte, err error) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	nByte, err = convert.Int8ToByte(nIntCB)
-	if err != nil {
-		log.Fatal(err)
-	}
+	nByte = convert.Int8ToByte(nIntCB)
 	// ethernet header - src MAC addr [6 bytes]
 	packet[6] = *nByte
 	packet[7] = randSrcMACAddr[0]
@@ -183,22 +171,13 @@ func TCP6(size int, ipv6Byte []byte, portByte []byte) (packet []byte, err error)
 	if err != nil {
 		return nil, errors.New("invalid uint8")
 	}
-	nIntCB, err := bit.Clear(nUInt8, 0) // to ensure unicast, bit 0 is not set
-	if err != nil {
-		return nil, errors.New("invalid uint8")
-	}
-	nIntCB, err = bit.Clear(nIntCB, 1) // to ensure factory default, bit 1 is not set
-	if err != nil {
-		return nil, errors.New("invalid uint8")
-	}
+	nIntCB := bit.Clear(nUInt8, 0) // to ensure unicast, bit 0 is not set
+	nIntCB = bit.Clear(nIntCB, 1)  // to ensure factory default, bit 1 is not set
 	randDstMACAddr, err := rand.Byte(5)
 	if err != nil {
 		log.Fatal(err)
 	}
-	nByte, err := convert.Int8ToByte(nIntCB)
-	if err != nil {
-		log.Fatal(err)
-	}
+	nByte := convert.Int8ToByte(nIntCB)
 	// ethernet header - dst MAC addr [6 bytes]
 	packet[0] = *nByte
 	packet[1] = randDstMACAddr[0]
@@ -210,10 +189,7 @@ func TCP6(size int, ipv6Byte []byte, portByte []byte) (packet []byte, err error)
 	if err != nil {
 		log.Fatal(err)
 	}
-	nByte, err = convert.Int8ToByte(nIntCB)
-	if err != nil {
-		log.Fatal(err)
-	}
+	nByte = convert.Int8ToByte(nIntCB)
 	// ethernet header - src MAC addr [6 bytes]
 	packet[6] = *nByte
 	packet[7] = randSrcMACAddr[0]

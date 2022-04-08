@@ -5,8 +5,6 @@
 // The authors and publishers assume no responsibility.
 // For educational purposes only.
 
-// sudo code . --no-sandbox --user-data-dir=/home/anonymous/Documents/user-data-dir
-
 package convert
 
 import (
