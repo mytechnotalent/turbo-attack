@@ -9,27 +9,20 @@
 package sudo
 
 import (
-	"fmt"
-	"log"
-	"os"
+	"errors"
 	"os/exec"
 	"strconv"
 )
 
-// Check ensures application has proper permissions before proceeding.
-func Check() {
+// Check ensures application is run as root.
+// It will return an error if one occurred.
+func Check(i int) error {
 	cmd := exec.Command("id", "-u")
-	output, err := cmd.Output()
-	if err != nil {
-		log.Fatal(err)
-	}
-	i, err := strconv.Atoi(string(output[:len(output)-1])) // remove the \n
-	if err != nil {
-		log.Fatal(err)
-	}
+	output, _ := cmd.Output()
+	j, _ := strconv.Atoi(string(output[:len(output)-1])) // remove the \n
 	// 0 = root, 501 = non-root user
-	if i != 0 {
-		fmt.Println("application will only run as root (sudo)")
-		os.Exit(0)
+	if i != j {
+		return errors.New("application will only run as root (sudo)")
 	}
+	return nil
 }

@@ -28,7 +28,10 @@ func main() {
 		return
 	}
 
-	sudo.Check()
+	err = sudo.Check(0)
+	if err != nil {
+		log.Fatal("application will only run as root (sudo)")
+	}
 
 	if len(os.Args) != 6 {
 		fmt.Println("usage: turbo-attack_010_linux_arm64 <ethInterface> <ipVersion> <ip> <port> <count>")
