@@ -28,7 +28,7 @@ func main() {
 		return
 	}
 
-	err = sudo.Check(0)
+	err := sudo.Check(0)
 	if err != nil {
 		log.Fatal("application will only run as root (sudo)")
 	}
