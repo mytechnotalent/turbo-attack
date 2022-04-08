@@ -5,7 +5,8 @@
 // The authors and publishers assume no responsibility.
 // For educational purposes only.
 
-// sudo dlv debug --headless --listen=:2345 --log --api-version=2 exec /mypath/binary -- eth0 4 192.168.0.2 443 1
+// go build
+// PATH=/usr/local/go/bin:"$PATH" /usr/bin/dlv debug --headless --listen=:2345 --log --api-version=2 turbo-attack -- eth0 4 192.168.0.2 443 1
 
 package main
 
