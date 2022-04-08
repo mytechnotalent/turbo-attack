@@ -41,61 +41,61 @@ func Int16ToByte(n *uint16) (*[]byte, error) {
 	return &nByte, nil
 }
 
-// IPV4 converts a string into a properly formatted byte and int.
+// IP4 converts a string into a properly formatted byte and int.
 // It will return a []byte and int or an error if one occurred.
-func IPV4(ethInterface, ip, port, count *string) (*[]byte, *[]byte, *int, error) {
+func IP4(ethInterface, ip, port, count *string) (*[]byte, *[]byte, *int, error) {
 	if !((*ethInterface == "eth0") || (*ethInterface == "wlan0")) {
 		return nil, nil, nil, errors.New("invalid interface")
 	}
-	ipv4NetIP := net.ParseIP(*ip)
-	if ipv4NetIP == nil {
-		return nil, nil, nil, errors.New("invalid ipv4 ip")
+	ip4NetIP := net.ParseIP(*ip)
+	if ip4NetIP == nil {
+		return nil, nil, nil, errors.New("invalid ip4 ip")
 	}
 	validIP4IP := strings.Contains(*ip, ":")
 	if validIP4IP == true {
-		return nil, nil, nil, errors.New("invalid ipv4 ip")
+		return nil, nil, nil, errors.New("invalid ip4 ip")
 	}
-	ipv4Byte := []byte(ipv4NetIP)
+	ip4Byte := []byte(ip4NetIP)
 	portInt, err := strconv.Atoi(*port) // convert first string octet to int
-	portUint16 := uint16(portInt)
+	portUInt16 := uint16(portInt)
 	if err != nil {
 		return nil, nil, nil, errors.New("invalid uint16")
 	}
 	if portInt < 1 || portInt > 65535 {
 		return nil, nil, nil, errors.New("invalid port range")
 	}
-	portByte, _ := Int16ToByte(&portUint16)
+	portByte, _ := Int16ToByte(&portUInt16)
 	countInt, _ := strconv.Atoi(*count)
 	if countInt < 1 || countInt > 2147483647 {
 		return nil, nil, nil, errors.New("invalid count range")
 	}
-	return &ipv4Byte, portByte, &countInt, nil
+	return &ip4Byte, portByte, &countInt, nil
 }
 
-// IPV6 converts a string into a properly formatted byte and int.
+// IP6 converts a string into a properly formatted byte and int.
 // It will return a []byte, []byte, int or an error if one occurred.
-func IPV6(ethInterface, ip, port, count *string) (*[]byte, *[]byte, *int, error) {
+func IP6(ethInterface, ip, port, count *string) (*[]byte, *[]byte, *int, error) {
 	if !((*ethInterface == "eth0") || (*ethInterface == "wlan0")) {
 		return nil, nil, nil, errors.New("invalid interface")
 	}
-	ipv6NetIP := net.ParseIP(*ip)
-	if ipv6NetIP == nil {
+	ip6NetIP := net.ParseIP(*ip)
+	if ip6NetIP == nil {
 		return nil, nil, nil, errors.New("invalid ip6 ip")
 	}
 	validIP6IP := strings.Contains(*ip, ".")
 	if validIP6IP == true {
 		return nil, nil, nil, errors.New("invalid ip6 ip")
 	}
-	ipv6Byte := []byte(ipv6NetIP)
+	ip6Byte := []byte(ip6NetIP)
 	portInt, _ := strconv.Atoi(*port) // convert first string octet to int
-	portUint16 := uint16(portInt)
+	portUInt16 := uint16(portInt)
 	if portInt < 1 || portInt > 65535 {
 		return nil, nil, nil, errors.New("invalid port range")
 	}
-	portByte, _ := Int16ToByte(&portUint16)
+	portByte, _ := Int16ToByte(&portUInt16)
 	countInt, _ := strconv.Atoi(*count)
-	if countInt < 1 || countInt > 1000000 {
+	if countInt < 1 || countInt > 2147483647 {
 		return nil, nil, nil, errors.New("invalid count range")
 	}
-	return &ipv6Byte, portByte, &countInt, nil
+	return &ip6Byte, portByte, &countInt, nil
 }

@@ -28,11 +28,11 @@ func Int(max int64) (*uint8, error) {
 
 // Byte generates a random byte.
 // It will return a valid byte or error.
-func Byte(n int) ([]byte, error) {
+func Byte(n uint8) ([]byte, error) {
 	b := make([]byte, n, n)
 	_, err := rand.Read(b)
 	if err != nil {
-		return nil, err
+		return nil, errors.New("invalid uint8")
 	}
 	return b, nil
 }

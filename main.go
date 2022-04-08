@@ -42,23 +42,23 @@ func main() {
 
 	var wg sync.WaitGroup
 	if ipVersion == "4" {
-		ipv4Byte, portByte, countInt, err := convert.IPV4(&ethInterface, &ip, &port, &count)
+		ip4Byte, portByte, countInt, err := convert.IP4(&ethInterface, &ip, &port, &count)
 		if err != nil {
 			log.Fatal(err)
 		}
 		for i := 0; i < *countInt; i++ {
 			wg.Add(1)
-			routine.IPv4(&ethInterface, ipv4Byte, portByte)
+			routine.IPv4(&ethInterface, ip4Byte, portByte)
 			wg.Done()
 		}
 		wg.Wait()
 	} else if ipVersion == "6" {
-		ipv6Byte, portByte, countInt, err := convert.IPV6(&ethInterface, &ip, &port, &count)
+		ip6Byte, portByte, countInt, err := convert.IP6(&ethInterface, &ip, &port, &count)
 		if err != nil {
 			log.Fatal(err)
 		}
 		for i := 0; i < *countInt; i++ {
-			routine.IPv6(&ethInterface, ipv6Byte, portByte)
+			routine.IPv6(&ethInterface, ip6Byte, portByte)
 		}
 	} else {
 		fmt.Println("valid: 4 or 6")
