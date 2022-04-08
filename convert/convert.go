@@ -17,28 +17,22 @@ import (
 )
 
 // Int8ToByte converts an uint8 to a byte.
-// It will return a *byte or an error if one occurred.
-func Int8ToByte(n *uint8) (*byte, error) {
-	if *n < 0 || *n > 255 {
-		return nil, errors.New("invalid uint8")
-	}
+// It will return a *byte.
+func Int8ToByte(n *uint8) *byte {
 	nUint16 := uint16(*n)
 	nByte := make([]byte, 2, 2)
 	binary.BigEndian.PutUint16(nByte, nUint16)
 	nByte1 := nByte[1]
-	return &nByte1, nil
+	return &nByte1
 }
 
 // Int8ToByte converts an uint16 to a []byte.
-// It will return a *[]byte or an error if one occurred.
-func Int16ToByte(n *uint16) (*[]byte, error) {
-	if *n < 0 || *n > 65535 {
-		return nil, errors.New("invalid uint16")
-	}
+// It will return a *[]byte.
+func Int16ToByte(n *uint16) *[]byte {
 	nUint16 := uint16(*n)
 	nByte := make([]byte, 2, 2)
 	binary.BigEndian.PutUint16(nByte, nUint16)
-	return &nByte, nil
+	return &nByte
 }
 
 // IP4 converts a string into a properly formatted byte and int.
@@ -64,7 +58,7 @@ func IP4(ethInterface, ip, port, count *string) (*[]byte, *[]byte, *int, error) 
 	if portInt < 1 || portInt > 65535 {
 		return nil, nil, nil, errors.New("invalid port range")
 	}
-	portByte, _ := Int16ToByte(&portUInt16)
+	portByte := Int16ToByte(&portUInt16)
 	countInt, _ := strconv.Atoi(*count)
 	if countInt < 1 || countInt > 2147483647 {
 		return nil, nil, nil, errors.New("invalid count range")
@@ -92,7 +86,7 @@ func IP6(ethInterface, ip, port, count *string) (*[]byte, *[]byte, *int, error) 
 	if portInt < 1 || portInt > 65535 {
 		return nil, nil, nil, errors.New("invalid port range")
 	}
-	portByte, _ := Int16ToByte(&portUInt16)
+	portByte := Int16ToByte(&portUInt16)
 	countInt, _ := strconv.Atoi(*count)
 	if countInt < 1 || countInt > 2147483647 {
 		return nil, nil, nil, errors.New("invalid count range")
