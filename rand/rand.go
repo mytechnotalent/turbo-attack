@@ -13,9 +13,9 @@ import (
 	"math/big"
 )
 
-// Int generates a random int.
+// UInt8 generates a random uint8.
 // It will return a *uint8.
-func Int(max int64) *uint8 {
+func UInt8(max int64) *uint8 {
 	nBig, _ := rand.Int(rand.Reader, big.NewInt(max))
 	nInt64 := nBig.Int64()
 	nUInt8 := uint8(nInt64)

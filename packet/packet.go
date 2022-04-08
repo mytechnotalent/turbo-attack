@@ -19,7 +19,7 @@ import (
 func TCP4(size int, ipv4Byte, portByte []byte) (packet []byte, err error) {
 	packet = make([]byte, size, size)
 	// ethernet header - dst MAC addr [6 bytes]
-	nUInt8 := rand.Int(255)
+	nUInt8 := rand.UInt8(255)
 	nIntCB := bit.Clear(nUInt8, 0) // to ensure unicast, bit 0 is not set
 	nIntCB = bit.Clear(nIntCB, 1)  // to ensure factory default, bit 1 is not set
 	randDstMACAddr, _ := rand.Byte(5)
@@ -139,7 +139,7 @@ func TCP4(size int, ipv4Byte, portByte []byte) (packet []byte, err error) {
 func TCP6(size int, ipv6Byte []byte, portByte []byte) (packet []byte, err error) {
 	packet = make([]byte, size, size)
 	// ethernet header - dst MAC addr [6 bytes]
-	nUInt8 := rand.Int(255)
+	nUInt8 := rand.UInt8(255)
 	nIntCB := bit.Clear(nUInt8, 0) // to ensure unicast, bit 0 is not set
 	nIntCB = bit.Clear(nIntCB, 1)  // to ensure factory default, bit 1 is not set
 	randDstMACAddr, _ := rand.Byte(5)
