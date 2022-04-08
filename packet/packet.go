@@ -18,7 +18,7 @@ import (
 )
 
 // TCP4 provides custom TCP4 packet creation.
-// It will return a valid byte slice or error.
+// It will return a valid []byte or error.
 func TCP4(size int, ipv4Byte, portByte []byte) (packet []byte, err error) {
 	packet = make([]byte, size, size)
 	// ethernet header - dst MAC addr [6 bytes]
@@ -30,7 +30,7 @@ func TCP4(size int, ipv4Byte, portByte []byte) (packet []byte, err error) {
 	nIntCB = bit.Clear(nIntCB, 1)  // to ensure factory default, bit 1 is not set
 	randDstMACAddr, err := rand.Byte(5)
 	if err != nil {
-		log.Fatal(err)
+		return nil, errors.New("invalid uint8")
 	}
 	nByte := convert.Int8ToByte(nIntCB)
 	// ethernet header - dst MAC addr [6 bytes]
@@ -101,8 +101,8 @@ func TCP4(size int, ipv4Byte, portByte []byte) (packet []byte, err error) {
 	packet[34] = randSrcTCPPort[0]
 	packet[35] = randSrcTCPPort[1]
 	// TCP header - dst TCP port [2 bytes]
-	packet[36] = portByte[6]
-	packet[37] = portByte[7]
+	packet[36] = portByte[0]
+	packet[37] = portByte[1]
 	// TCP header - sequence number [4 bytes]
 	randSeqNum, err := rand.Byte(4)
 	if err != nil {
