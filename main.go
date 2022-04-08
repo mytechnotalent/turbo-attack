@@ -49,7 +49,7 @@ func main() {
 		}
 		for i := 0; i < *countInt; i++ {
 			wg.Add(1)
-			routine.IPv4(&ethInterface, ip4Byte, portByte)
+			routine.IP4(&ethInterface, ip4Byte, portByte)
 			wg.Done()
 		}
 		wg.Wait()
@@ -59,7 +59,7 @@ func main() {
 			log.Fatal(err)
 		}
 		for i := 0; i < *countInt; i++ {
-			routine.IPv6(&ethInterface, ip6Byte, portByte)
+			routine.IP6(&ethInterface, ip6Byte, portByte)
 		}
 	} else {
 		fmt.Println("valid: 4 or 6")

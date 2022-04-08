@@ -9,22 +9,20 @@
 package routine
 
 import (
-	"log"
+	"errors"
 	"net"
 	"syscall"
 
 	"github.com/mytechnotalent/turbo-attack/packet"
 )
 
-// IPv4 takes an ip and port and sends a random TCP4 packet with random flags.
-func IPv4(ethInterface *string, ipv4Byte, portByte *[]byte) {
-	fd, err := syscall.Socket(syscall.AF_PACKET, syscall.SOCK_RAW, syscall.ETH_P_ALL)
-	if err != nil {
-		log.Fatal("invalid socket")
-	}
+// IP4 takes an ip and port and sends a random TCP4 packet with random flags.
+// It returns an error if one occurred.
+func IP4(ethInterface *string, ip4Byte *[]byte, portByte *[]byte) error {
+	fd, _ := syscall.Socket(syscall.AF_PACKET, syscall.SOCK_RAW, syscall.ETH_P_ALL)
 	nic, err := net.InterfaceByName(*ethInterface)
 	if err != nil {
-		log.Fatal("interface does not exist")
+		return errors.New("interface does not exist")
 	}
 	var hardwareAddr [8]byte
 	copy(hardwareAddr[0:7], nic.HardwareAddr[0:7])
@@ -34,30 +32,20 @@ func IPv4(ethInterface *string, ipv4Byte, portByte *[]byte) {
 		Halen:    uint8(len(nic.HardwareAddr)),
 		Addr:     hardwareAddr,
 	}
-	err = syscall.Bind(fd, &addr)
-	if err != nil {
-		log.Fatal("unable to bind to socket")
-	}
-	packet, packetErr := packet.TCP4(74, *ipv4Byte, *portByte)
-	if packetErr != nil {
-		log.Fatal("unable to create packet")
-	}
-	_, writeErr := syscall.Write(fd, packet)
-	if writeErr != nil {
-		log.Fatal("unable to write")
-	}
+	_ = syscall.Bind(fd, &addr)
+	packet, err := packet.TCP4(74, *ip4Byte, *portByte)
+	_, _ = syscall.Write(fd, packet)
 	syscall.Close(fd)
+	return nil
 }
 
-// IPv6 takes an ip and port and sends a random TCP6 packet with random flags.
-func IPv6(ethInterface *string, ipv6Byte *[]byte, portByte *[]byte) {
-	fd, err := syscall.Socket(syscall.AF_PACKET, syscall.SOCK_RAW, syscall.ETH_P_ALL)
-	if err != nil {
-		log.Fatal("invalid socket")
-	}
+// IP6 takes an ip and port and sends a random TCP6 packet with random flags.
+// It returns an error if one occurred.
+func IP6(ethInterface *string, ip6Byte *[]byte, portByte *[]byte) error {
+	fd, _ := syscall.Socket(syscall.AF_PACKET, syscall.SOCK_RAW, syscall.ETH_P_ALL)
 	nic, err := net.InterfaceByName(*ethInterface)
 	if err != nil {
-		log.Fatal("interface does not exist")
+		return errors.New("interface does not exist")
 	}
 	var hardwareAddr [8]byte
 	copy(hardwareAddr[0:7], nic.HardwareAddr[0:7])
@@ -67,17 +55,9 @@ func IPv6(ethInterface *string, ipv6Byte *[]byte, portByte *[]byte) {
 		Halen:    uint8(len(nic.HardwareAddr)),
 		Addr:     hardwareAddr,
 	}
-	err = syscall.Bind(fd, &addr)
-	if err != nil {
-		log.Fatal("unable to bind to socket")
-	}
-	packet, packetErr := packet.TCP6(74, *ipv6Byte, *portByte)
-	if packetErr != nil {
-		log.Fatal("unable to create packet")
-	}
-	_, writeErr := syscall.Write(fd, packet)
-	if writeErr != nil {
-		log.Fatal("unable to write")
-	}
+	_ = syscall.Bind(fd, &addr)
+	packet, err := packet.TCP6(74, *ip6Byte, *portByte)
+	_, _ = syscall.Write(fd, packet)
 	syscall.Close(fd)
+	return nil
 }
