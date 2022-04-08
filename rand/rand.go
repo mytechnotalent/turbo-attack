@@ -10,20 +10,16 @@ package rand
 
 import (
 	"crypto/rand"
-	"errors"
 	"math/big"
 )
 
 // Int generates a random int.
-// It will return a valid *uint8 or error.
-func Int(max int64) (*uint8, error) {
-	nBig, err := rand.Int(rand.Reader, big.NewInt(max))
-	if err != nil {
-		return nil, errors.New("invalid uint8")
-	}
+// It will return a *uint8.
+func Int(max int64) *uint8 {
+	nBig, _ := rand.Int(rand.Reader, big.NewInt(max))
 	nInt64 := nBig.Int64()
 	nUInt8 := uint8(nInt64)
-	return &nUInt8, err
+	return &nUInt8
 }
 
 // Byte generates a random byte.
@@ -31,8 +27,5 @@ func Int(max int64) (*uint8, error) {
 func Byte(n uint8) ([]byte, error) {
 	b := make([]byte, n, n)
 	_, err := rand.Read(b)
-	if err != nil {
-		return nil, errors.New("invalid uint8")
-	}
-	return b, nil
+	return b, err
 }
