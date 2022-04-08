@@ -5,24 +5,25 @@
 // The authors and publishers assume no responsibility.
 // For educational purposes only.
 
-// Package routine provides random number generation.
-package random
+// Package rand provides random number generation.
+package rand
 
 import (
 	"crypto/rand"
+	"errors"
 	"math/big"
 )
 
 // Int generates a random int.
-// It will return a valid int or error.
-func Int(max int64) (int, error) {
+// It will return a valid *uint8 or error.
+func Int(max int64) (*uint8, error) {
 	nBig, err := rand.Int(rand.Reader, big.NewInt(max))
 	if err != nil {
-		panic(err)
+		return nil, errors.New("invalid uint8")
 	}
 	nInt64 := nBig.Int64()
-	nInt := int(nInt64)
-	return nInt, err
+	nUInt8 := uint8(nInt64)
+	return &nUInt8, err
 }
 
 // Byte generates a random byte.
