@@ -5,7 +5,7 @@
 <br>
 
 # turbo-attack
-A turbo traffic generator pentesting tool to generate random traffic with random mac and ip addresses in addition to random sequence numbers to a particular ip and port.
+A turbo traffic generator pentesting tool to generate random traffic with random MAC and IP addresses in addition to random sequence numbers to a particular IP and port.
 
 # Linux IPv4 (ARM64)
 ```bash
