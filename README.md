@@ -31,13 +31,13 @@ usage: sudo ./turbo-attack_010_linux_amd64 eth0 6 fe80:0000:0000:0000:0000:0000:
 
 <br>
 
-## Usage
+# Usage
 * Designed for Kali Linux or Debian distros only.  This software uses Linux syscalls in order to optimize for speed.
 * Tested within a Kali Linux ARM64 VMware Fusion VM on a Macbook Pro ARM64 machine.
 
 <br>
 
-## Terms Of Use
+# Terms Of Use
 * Do NOT use this on any computer you do not own or are not allowed to run this on.<br>
 * You may NEVER attempt to sell this, it is free and open source.<br>
 * The authors and publishers assume no responsibility.<br>
@@ -45,7 +45,7 @@ usage: sudo ./turbo-attack_010_linux_amd64 eth0 6 fe80:0000:0000:0000:0000:0000:
 
 <br>
 
-## Run Tests
+# Run Tests
 ```bash
 sudo /usr/local/go/bin/go test -v -cover ./...
 sudo /usr/local/go/bin/go test -coverprofile=coverage.out ./...
@@ -54,5 +54,5 @@ go tool cover -html=coverage.out
 
 <br>
 
-## License
+# License
 [Apache License, Version 2.0](https://www.apache.org/licenses/LICENSE-2.0)
